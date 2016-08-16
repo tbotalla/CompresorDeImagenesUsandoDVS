@@ -1,4 +1,4 @@
-package com.tbotalla;
+package tbotalla.model;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.ejml.simple.SimpleMatrix;
+
+import com.tbotalla.ConversorImagenes;
+import com.tbotalla.DVS;
+import com.tbotalla.Utils;
 
 /* Compresor de imagenes utilizando la descomposicion en valores singulares (SVD) haciendo uso de la libreria EJML para el manejo algebraico*/
 public class App {
@@ -66,5 +70,4 @@ public class App {
 			System.err.println("IOException al escribir la imagen " + fileOutputName);
 		}
 	}
-
 }

@@ -1,4 +1,4 @@
-package com.tbotalla;
+package tbotalla.model;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;

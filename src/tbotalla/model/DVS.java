@@ -1,4 +1,4 @@
-package com.tbotalla;
+package tbotalla.model;
 
 import org.ejml.simple.SimpleMatrix;
 import org.ejml.simple.SimpleSVD;

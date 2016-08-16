@@ -6,7 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.tbotalla.Utils;
+import tbotalla.model.Utils;
 
 public class ValidatorTests {
 
