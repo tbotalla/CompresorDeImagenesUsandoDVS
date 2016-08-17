@@ -1,6 +1,5 @@
 package tbotalla.view;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -16,6 +15,28 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+//import java.awt.Component;
+//import java.awt.Container;
+//import java.awt.Dimension;
+//import java.awt.Graphics2D;
+//import java.awt.Image;
+//import java.awt.RenderingHints;
+//import java.awt.TextField;
+//import java.awt.event.ActionListener;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import java.io.IOException;
+//
+//import javax.imageio.ImageIO;
+//import javax.swing.Box;
+//import javax.swing.BoxLayout;
+//import javax.swing.ImageIcon;
+//import javax.swing.JButton;
+//import javax.swing.JFileChooser;
+//import javax.swing.JFrame;
+//import javax.swing.JLabel;
+//import javax.swing.JPanel;
+
 import tbotalla.controller.ButtonListener;
 import tbotalla.controller.ButtonListenerComprimir;
 import tbotalla.controller.ButtonListenerSeleccionarArchivo;
@@ -30,10 +51,11 @@ public class VistaMenu extends JPanel {
 	private ButtonListener blSeleccionarArchivo;
 	private static JButton btnComprimir;
 	private ButtonListener blComprimir;
-//	private TextField txtNombreArchivoEntrada;
+	// private TextField txtNombreArchivoEntrada;
 	private TextField txtCantidadVS;
 	private TextField txtNombreArchivoSalida;
 	private static JFileChooser fc;
+	private static JPanel panelImagen;
 
 	public VistaMenu(JFrame ventana) {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -44,16 +66,17 @@ public class VistaMenu extends JPanel {
 		this.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		// Create a file chooser
-		// final JFileChooser fc = new JFileChooser();
 		fc = new JFileChooser();
-		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
+		fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
 		fc.setMaximumSize(new Dimension(400, 200));
+		fc.addChoosableFileFilter(new ImageFilter()); // Solo permitido
+														// seleccionar imagenes
+		fc.setAcceptAllFileFilterUsed(false);
+
 		// this.add(fc);
 
 		btnSeleccionarArchivo = addAButton("Seleccionar archivo", this);
-		blSeleccionarArchivo = new ButtonListenerSeleccionarArchivo(ventana, fc);
-		btnSeleccionarArchivo.addActionListener((ActionListener) blSeleccionarArchivo);
-		this.add(Box.createRigidArea(new Dimension(0, 30)));
+		this.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		JLabel labelIngresoVS = new JLabel("Cantidad de valores singulares a usar: ");
 		labelIngresoVS.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -61,19 +84,28 @@ public class VistaMenu extends JPanel {
 		this.add(Box.createRigidArea(new Dimension(0, 10)));
 
 		txtCantidadVS = addATextField("", this);
-		this.add(Box.createRigidArea(new Dimension(0, 30)));
+		this.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		JLabel labelIngresoArchivoSalida = new JLabel("Nombre archivo de salida (PNG): ");
 		labelIngresoArchivoSalida.setAlignmentX(Component.CENTER_ALIGNMENT);
 		this.add(labelIngresoArchivoSalida);
 		this.add(Box.createRigidArea(new Dimension(0, 10)));
 
-		txtNombreArchivoSalida = addATextField("", this);
-		this.add(Box.createRigidArea(new Dimension(0, 30)));
+		txtNombreArchivoSalida = addATextField("out.png", this);
+		this.add(Box.createRigidArea(new Dimension(0, 20)));
 
 		btnComprimir = addAButton("Comprimir", this);
-		blComprimir = new ButtonListenerComprimir(ventana, fc, txtCantidadVS,
-				txtNombreArchivoSalida);
+		this.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		panelImagen = new JPanel();
+		panelImagen.setLayout(new BoxLayout(panelImagen, BoxLayout.X_AXIS));
+		this.add(panelImagen);
+
+		// Seteo de los listeners
+		blSeleccionarArchivo = new ButtonListenerSeleccionarArchivo(ventana, fc, panelImagen);
+		btnSeleccionarArchivo.addActionListener((ActionListener) blSeleccionarArchivo);
+
+		blComprimir = new ButtonListenerComprimir(ventana, fc, txtCantidadVS, txtNombreArchivoSalida);
 		btnComprimir.addActionListener((ActionListener) blComprimir);
 
 	}

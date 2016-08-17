@@ -3,6 +3,7 @@ package tbotalla.view;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -13,9 +14,8 @@ public class UI {
 
 	private static void createAndShowGUI() {
 		// Set up the window.
-		ventana.setPreferredSize(new Dimension(800, 600));
-		ventana.setLocationRelativeTo(null);
-		ventana.setResizable(false); // tamanio fijo
+		ventana.setPreferredSize(new Dimension(1024, 576));
+		ventana.setResizable(true);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Set up the content pane.
@@ -23,6 +23,7 @@ public class UI {
 
 		// Display the window.
 		ventana.pack();
+		ventana.setLocationRelativeTo(null); // Ventana Centrada
 		ventana.setVisible(true);
 
 		mostrarVistaMenu();

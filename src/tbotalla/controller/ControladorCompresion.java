@@ -2,6 +2,7 @@ package tbotalla.controller;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.TextField;
 import java.awt.image.BufferedImage;
@@ -10,9 +11,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import org.ejml.simple.SimpleMatrix;
 
 import tbotalla.model.ConversorImagenes;
@@ -48,13 +54,35 @@ public class ControladorCompresion {
 			BufferedImage bufferNuevaImagen = ConversorImagenes.matrizAImagen(nuevaMatrizImagen);
 
 			try {
+
 				ImageIO.write(bufferNuevaImagen, "png", new File(txtNombreArchivoSalida.getText()));
 				System.out.println("Fin de la compresion");
 				System.out.println("Se creo el archivo " + txtNombreArchivoSalida.getText());
+
+				// Muestra del archivo comprimido por GUI
+				Image imagenSalida = new ImageIcon(txtNombreArchivoSalida.getText()).getImage();
+				ImageIcon icon = new ImageIcon(imagenSalida);
+				JLabel label = new JLabel();
+				label.setIcon(icon);
+
+				label.removeAll(); // Limpia el panel
+				label.updateUI(); // Refresh del panel
+
+				JFrame ventanaImagenComprimida = new JFrame(
+						"Imagen comprimida usando " + txtCantidadVS.getText() + " valores singulares");
+				ventanaImagenComprimida.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+				ventanaImagenComprimida.setLocationRelativeTo(null);
+				ventanaImagenComprimida.setResizable(true);
+
+				ventanaImagenComprimida.add(label);
+				ventanaImagenComprimida.setResizable(false);
+				ventanaImagenComprimida.pack();
+				ventanaImagenComprimida.setLocationRelativeTo(null); // Ventana
+																		// Centrada
+				ventanaImagenComprimida.setVisible(true);
 			} catch (IOException oie) {
 				System.err.println("IOException al escribir la imagen " + txtNombreArchivoSalida.getText());
 			}
-
 		}
 	}
 
