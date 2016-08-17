@@ -2,8 +2,6 @@ package tbotalla.model;
 
 import java.io.File;
 
-import com.tbotalla.FileFormatValidator;
-
 public class Utils {
 
 	public static boolean isNumeric(String str) {

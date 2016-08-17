@@ -6,15 +6,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-
 import org.ejml.simple.SimpleMatrix;
 
-import com.tbotalla.ConversorImagenes;
-import com.tbotalla.DVS;
-import com.tbotalla.Utils;
 
 /* Compresor de imagenes utilizando la descomposicion en valores singulares (SVD) haciendo uso de la libreria EJML para el manejo algebraico*/
 public class App {

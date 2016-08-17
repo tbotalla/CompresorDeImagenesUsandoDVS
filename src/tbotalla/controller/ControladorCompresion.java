@@ -9,17 +9,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-
 import org.ejml.simple.SimpleMatrix;
 
-import com.tbotalla.ConversorImagenes;
-import com.tbotalla.DVS;
-
+import tbotalla.model.ConversorImagenes;
+import tbotalla.model.DVS;
 import tbotalla.model.Utils;
 
 public class ControladorCompresion {
