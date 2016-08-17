@@ -10,15 +10,15 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import org.ejml.simple.SimpleMatrix;
 
-
 /* Compresor de imagenes utilizando la descomposicion en valores singulares (SVD) haciendo uso de la libreria EJML para el manejo algebraico*/
-public class App {
+public class ConsoleApp {
 	static String fileName = null;
 	static String fileOutputName = null;
 	static String tipoFormato = "png";
 	static int k;
 	static boolean debeSeguirIngresando = true;
 
+	/* Para ejecucion por consola */
 	public static void main(String[] args) throws IOException {
 		BufferedReader bufferIO = new BufferedReader(new InputStreamReader(System.in));
 

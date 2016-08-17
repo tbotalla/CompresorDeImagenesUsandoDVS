@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
 
-public class UI {
+public class App {
 	private static JFrame ventana = new JFrame("Conversor de Imagenes");
 
 	private static void createAndShowGUI() {

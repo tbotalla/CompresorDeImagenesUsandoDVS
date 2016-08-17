@@ -23,22 +23,22 @@ import org.ejml.simple.SimpleMatrix;
 
 import tbotalla.model.ConversorImagenes;
 import tbotalla.model.DVS;
+import tbotalla.model.MatrixEncoder;
 import tbotalla.model.Utils;
 
 public class ControladorCompresion {
 
 	private JFrame ventana;
 	private JFileChooser fileChooser;
-	// private TextField txtNombreArchivoEntrada;
 	private TextField txtCantidadVS;
 	private TextField txtNombreArchivoSalida;
 
+	// Se encarga de procesar los datos ingresados y comprimir la imagen
 	public ControladorCompresion(JFrame ventana, JFileChooser fileChooser, TextField txtCantidadVS,
 			TextField txtNombreArchivoSalida) {
 		super();
 		this.ventana = ventana;
 		this.fileChooser = fileChooser;
-		// this.txtNombreArchivoEntrada = txtNombreArchivoEntrada;
 		this.txtCantidadVS = txtCantidadVS;
 		this.txtNombreArchivoSalida = txtNombreArchivoSalida;
 
@@ -49,8 +49,30 @@ public class ControladorCompresion {
 			Image imagen = new ImageIcon(fileChooser.getSelectedFile().toString()).getImage();
 			SimpleMatrix[] matrizImagen = ConversorImagenes.imagenAMatriz(ConversorImagenes.cargarImagen(imagen));
 
-			Object[] data = DVS.calcular(Integer.valueOf(txtCantidadVS.getText()), matrizImagen);
-			SimpleMatrix[] nuevaMatrizImagen = (SimpleMatrix[]) data[0];
+			// TODO, prueba pasando por el encoder
+			MatrixEncoder encoder = new MatrixEncoder();
+			encoder.encodeMatrix(matrizImagen);
+			SimpleMatrix[] matricesImgComprimidas = encoder.decodeMatrix();
+					
+					
+//			Object[] data = DVS.calcular(Integer.valueOf(txtCantidadVS.getText()), matrizImagen);
+			Object[] data = DVS.calcular(Integer.valueOf(txtCantidadVS.getText()), matricesImgComprimidas); // prueba pasando por la compresion
+			SimpleMatrix[] nuevaMatrizImagen = (SimpleMatrix[]) data[0]; // los
+																			// otros
+																			// elementos
+																			// del
+																			// array
+																			// data
+																			// son
+																			// el
+																			// primer
+																			// y
+																			// ultimo
+																			// sigma,
+																			// no
+																			// usado
+																			// por
+																			// ahora
 			BufferedImage bufferNuevaImagen = ConversorImagenes.matrizAImagen(nuevaMatrizImagen);
 
 			try {
@@ -80,6 +102,7 @@ public class ControladorCompresion {
 				ventanaImagenComprimida.setLocationRelativeTo(null); // Ventana
 																		// Centrada
 				ventanaImagenComprimida.setVisible(true);
+
 			} catch (IOException oie) {
 				System.err.println("IOException al escribir la imagen " + txtNombreArchivoSalida.getText());
 			}
