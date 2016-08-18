@@ -3,7 +3,6 @@ package tbotalla.model;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,19 +12,19 @@ import java.nio.file.Paths;
 import java.util.zip.DataFormatException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-
+import org.apache.log4j.Logger;
 import org.ejml.simple.SimpleMatrix;
-
-import com.opencsv.CSVWriter;
+import tbotalla.view.App;
 
 public class MatrixEncoder {
+	private final static Logger logger = Logger.getLogger(App.class); // Log4j
 
 	public MatrixEncoder() {
 
 	}
 
 	public SimpleMatrix[] decodeMatrix() {
-		System.out.println("Decodificando la imagen");
+		logger.debug("Decodificando la imagen");
 
 		Path path = Paths.get("codificado");
 		byte[] bytes;
@@ -34,7 +33,9 @@ public class MatrixEncoder {
 			bytes = Files.readAllBytes(path);
 			byte[] bytesDecompressed = null;
 			try {
-				bytesDecompressed = CompressionUtils.decompress(bytes);
+				CompressionUtils compresor = new CompressionUtils();
+				bytesDecompressed = compresor.decompress(bytes);
+				logger.info("bytesDecompressed: " + bytesDecompressed.length / 1024 + " Kb");
 			} catch (DataFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -61,7 +62,7 @@ public class MatrixEncoder {
 	}
 
 	public void encodeMatrix(SimpleMatrix[] matriz) {
-		System.out.println("Codificando la imagen");
+		logger.debug("Codificando la imagen");
 		try {
 			// Encoding
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -72,7 +73,9 @@ public class MatrixEncoder {
 			byte[] bytes = baos.toByteArray();
 
 			// Compressing
-			byte[] bytesCompressed = CompressionUtils.compress(bytes);
+			CompressionUtils compresor = new CompressionUtils();
+			byte[] bytesCompressed = compresor.compress(bytes);
+			logger.info("bytesCompressed: " + bytesCompressed.length / 1024 + " Kb");
 
 			FileOutputStream stream = new FileOutputStream("codificado");
 			try {
@@ -81,7 +84,6 @@ public class MatrixEncoder {
 			} finally {
 				stream.close();
 			}
-
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

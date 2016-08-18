@@ -10,6 +10,14 @@ public class Utils {
 	public final static String tiff = "tiff";
 	public final static String tif = "tif";
 	public final static String png = "png";
+	public final static int DEFAULT_SCREEN_WIDTH = 1024;
+	public final static int DEFAULT_SCREEN_HEIGHT = 576;
+	public final static int DEFAULT_PADDING_TOP_MAIN_PANEL = 80;
+	public final static int DEFAULT_PADDING_LEFT_MAIN_PANEL = 10;
+	public final static int DEFAULT_PADDING_BOTTOM_MAIN_PANEL = 10;
+	public final static int DEFAULT_PADDING_RIGHT_MAIN_PANEL = 10;
+	public final static int DEFAULT_IMAGE_WIDTH = 200;
+	public final static int DEFAULT_IMAGE_HEIGHT = 200;
 
 	public static boolean isNumeric(String str) {
 		try {

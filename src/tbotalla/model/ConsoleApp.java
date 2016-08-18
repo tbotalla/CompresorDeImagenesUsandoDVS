@@ -12,11 +12,11 @@ import org.ejml.simple.SimpleMatrix;
 
 /* Compresor de imagenes utilizando la descomposicion en valores singulares (SVD) haciendo uso de la libreria EJML para el manejo algebraico*/
 public class ConsoleApp {
-	static String fileName = null;
-	static String fileOutputName = null;
-	static String tipoFormato = "png";
-	static int k;
-	static boolean debeSeguirIngresando = true;
+	private static String fileName = null;
+	private static String fileOutputName = null;
+	private static String tipoFormato = "png";
+	private static int k;
+	private static boolean debeSeguirIngresando = true;
 
 	/* Para ejecucion por consola */
 	public static void main(String[] args) throws IOException {
@@ -51,11 +51,13 @@ public class ConsoleApp {
 		}
 
 		Image imagen = new ImageIcon(fileName).getImage();
-		SimpleMatrix[] matrizImagen = ConversorImagenes.imagenAMatriz(ConversorImagenes.cargarImagen(imagen));
+		ConversorImagenes conversor = new ConversorImagenes();
+		SimpleMatrix[] matrizImagen = conversor.imagenAMatriz(conversor.cargarImagen(imagen));
 
-		Object[] data = DVS.calcular(k, matrizImagen);
+		DVS dvs = new DVS();
+		Object[] data = dvs.calcular(k, matrizImagen);
 		SimpleMatrix[] nuevaMatrizImagen = (SimpleMatrix[]) data[0];
-		BufferedImage bufferNuevaImagen = ConversorImagenes.matrizAImagen(nuevaMatrizImagen);
+		BufferedImage bufferNuevaImagen = conversor.matrizAImagen(nuevaMatrizImagen);
 
 		try {
 			ImageIO.write(bufferNuevaImagen, tipoFormato, new File(fileOutputName));

@@ -1,17 +1,17 @@
 package tbotalla.model;
 
+import org.apache.log4j.Logger;
 import org.ejml.simple.SimpleMatrix;
 import org.ejml.simple.SimpleSVD;
 
 public class DVS {
+	private final static Logger logger = Logger.getLogger(DVS.class); // Log4j
 
 	// Calcula la DVS para una matriz de m*n
-	public static Object[] calcular(int k, SimpleMatrix A) {
+	public Object[] calcular(int k, SimpleMatrix A) {
 		SimpleSVD dvs = A.svd();
-		// System.out.println("Condicion de la matriz:" +
-		// String.valueOf(A.conditionP2()));
-		// System.out.println("Cantidad de autovalores: " +
-		// dvs.getSVD().getSingularValues().length);
+		logger.info("Condicion de la matriz:" +String.valueOf(A.conditionP2()));
+		logger.info("Cantidad de autovalores: " +dvs.getSVD().getSingularValues().length);
 
 		double[] valoresSingulares = dvs.getSVD().getSingularValues();
 		double primerSigma = valoresSingulares[0];
@@ -33,8 +33,8 @@ public class DVS {
 	// Calcula la DVS para cada una de las matrices y arma un array con las
 	// cuatro matrices y los
 	// primeros y ultimos valores singulares de cada una
-	public static Object[] calcular(int k, SimpleMatrix[] imagen) {
-		System.out.println("Tamaño de la imagen: " + imagen[0].numRows() + "x" + imagen[0].numCols());
+	public Object[] calcular(int k, SimpleMatrix[] imagen) {
+		logger.info("Tamanio de la imagen: " + imagen[0].numRows() + "x" + imagen[0].numCols());
 
 		SimpleMatrix[] nuevaImagen = new SimpleMatrix[4];
 		double[] sigmas = new double[4];

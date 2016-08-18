@@ -3,18 +3,20 @@ package tbotalla.view;
 import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Toolkit;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.border.EmptyBorder;
+import org.apache.log4j.Logger;
+import tbotalla.controller.ControladorCompresion;
+import tbotalla.model.Utils;
 
 public class App {
 	private static JFrame ventana = new JFrame("Conversor de Imagenes");
+	private final static Logger logger = Logger.getLogger(App.class); // Log4j
 
 	private static void createAndShowGUI() {
 		// Set up the window.
-		ventana.setPreferredSize(new Dimension(1024, 576));
+		ventana.setPreferredSize(new Dimension(Utils.DEFAULT_SCREEN_WIDTH, Utils.DEFAULT_SCREEN_HEIGHT));
 		ventana.setResizable(true);
 		ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -23,7 +25,7 @@ public class App {
 
 		// Display the window.
 		ventana.pack();
-		ventana.setLocationRelativeTo(null); // Ventana Centrada
+		ventana.setLocationRelativeTo(null); // Ventana centrada
 		ventana.setVisible(true);
 
 		mostrarVistaMenu();
@@ -39,12 +41,15 @@ public class App {
 
 		pane.add(vistaMenu, "vistaMenu");
 
-		((JComponent) pane).setBorder(new EmptyBorder(80, 10, 10, 10)); // padding
+		((JComponent) pane)
+				.setBorder(new EmptyBorder(Utils.DEFAULT_PADDING_TOP_MAIN_PANEL, Utils.DEFAULT_PADDING_LEFT_MAIN_PANEL,
+						Utils.DEFAULT_PADDING_BOTTOM_MAIN_PANEL, Utils.DEFAULT_PADDING_RIGHT_MAIN_PANEL)); // padding
 	}
 
 	public static void main(String[] args) {
 		// Schedule a job for the event-dispatching thread:
 		// creating and showing this application's GUI.
+		logger.debug("Inicio GUI-App");
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();

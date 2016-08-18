@@ -7,13 +7,13 @@ import org.ejml.simple.SimpleMatrix;
 
 public class ConversorImagenes {
 	// Devuelve un Image cargado de la ruta que recibe como parametro
-	public static BufferedImage cargarImagenDesdeArchivo(String imagenACargar) {
+	public BufferedImage cargarImagenDesdeArchivo(String imagenACargar) {
 		Image imagenCargada = new ImageIcon(imagenACargar).getImage();
 		return cargarImagen(imagenCargada);
 	}
 
 	// Devuelve un BufferedImage a partir de un objeto tipo Image
-	public static BufferedImage cargarImagen(Image imagenCargada) {
+	public BufferedImage cargarImagen(Image imagenCargada) {
 		BufferedImage bufferImagen = new BufferedImage(imagenCargada.getWidth(null), imagenCargada.getHeight(null),
 				BufferedImage.TYPE_INT_ARGB);
 
@@ -24,7 +24,7 @@ public class ConversorImagenes {
 
 	// Devuelve un array de 4 matrices para alpha, red, green, blue a partir del
 	// buffer de la imagen
-	public static SimpleMatrix[] imagenAMatriz(BufferedImage bufferImagen) {
+	public SimpleMatrix[] imagenAMatriz(BufferedImage bufferImagen) {
 		int ancho = bufferImagen.getWidth();
 		int alto = bufferImagen.getHeight();
 
@@ -38,7 +38,7 @@ public class ConversorImagenes {
 
 	// Devuelve un array de 4 matrices para alpha, red, green, blue a partir de
 	// un array con los rgb para cada posicion de la matriz
-	private static SimpleMatrix[] arrayAMatriz(int[] rgbs, int ancho, int alto) {
+	private SimpleMatrix[] arrayAMatriz(int[] rgbs, int ancho, int alto) {
 		SimpleMatrix alphaMatrix = new SimpleMatrix(ancho, alto);
 		SimpleMatrix redMatrix = new SimpleMatrix(ancho, alto);
 		SimpleMatrix greenMatrix = new SimpleMatrix(ancho, alto);
@@ -70,7 +70,7 @@ public class ConversorImagenes {
 		return RGBmatrices;
 	}
 
-	private static void correctDouble(SimpleMatrix m, int i, int j) {
+	private void correctDouble(SimpleMatrix m, int i, int j) {
 		if (m.get(i, j) > 255) {
 			m.set(i, j, 255);
 		} else if (m.get(i, j) < 0) {
@@ -79,7 +79,7 @@ public class ConversorImagenes {
 	}
 
 	// Devuelve un BufferedImage a partir de un array de matrices con los argb
-	public static BufferedImage matrizAImagen(SimpleMatrix[] matrices) {
+	public BufferedImage matrizAImagen(SimpleMatrix[] matrices) {
 		int alto = matrices[0].numCols();
 		int ancho = matrices[0].numRows();
 		int[] rgbs = new int[ancho * alto];

@@ -6,10 +6,16 @@ import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
-public class CompressionUtils {
+import org.apache.log4j.Logger;
 
-	public static byte[] compress(byte[] data) throws IOException {
+import tbotalla.view.App;
+
+public class CompressionUtils {
+	private final static Logger logger = Logger.getLogger(App.class); // Log4j
+
+	public byte[] compress(byte[] data) throws IOException {
 		Deflater deflater = new Deflater();
+		deflater.setLevel(9);
 		deflater.setInput(data);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
 		deflater.finish();
@@ -21,12 +27,12 @@ public class CompressionUtils {
 		}
 		outputStream.close();
 		byte[] output = outputStream.toByteArray();
-		System.out.println("Original: " + data.length / 1024 + " Kb");
-		System.out.println("Compressed: " + output.length / 1024 + " Kb");
+		logger.info("Original: " + data.length / 1024 + " Kb");
+		logger.info("Compressed: " + output.length / 1024 + " Kb");
 		return output;
 	}
 
-	public static byte[] decompress(byte[] data) throws IOException, DataFormatException {
+	public byte[] decompress(byte[] data) throws IOException, DataFormatException {
 		Inflater inflater = new Inflater();
 		inflater.setInput(data);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
@@ -37,8 +43,8 @@ public class CompressionUtils {
 		}
 		outputStream.close();
 		byte[] output = outputStream.toByteArray();
-		System.out.println("Original: " + data.length);
-		System.out.println("Compressed: " + output.length);
+		logger.info("Original: " + data.length);
+		logger.info("Compressed: " + output.length);
 		return output;
 	}
 }

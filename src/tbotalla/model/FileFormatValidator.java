@@ -8,7 +8,6 @@ public class FileFormatValidator {
 	private Pattern patternPNG;
 	private Pattern patternPNG_JPG;
 	private Matcher matcher;
-
 	private static final String IMAGE_PATTERN_JPG_PNG = "([^\\s]+(\\.(?i)(jpg|png))$)";
 	private static final String IMAGE_PATTERN_PNG = "([^\\s]+(\\.(?i)(png))$)";
 
@@ -20,7 +19,6 @@ public class FileFormatValidator {
 	public boolean validatePNG(final String image) {
 		matcher = patternPNG.matcher(image);
 		return matcher.matches();
-
 	}
 
 	public boolean validatePNGorJPG(final String image) {

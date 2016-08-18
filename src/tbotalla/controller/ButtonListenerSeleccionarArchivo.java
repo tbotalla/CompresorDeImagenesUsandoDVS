@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import tbotalla.model.Utils;
+
 public class ButtonListenerSeleccionarArchivo implements ButtonListener, ActionListener {
 	private JFrame ventana;
 	private JFileChooser fileChooser;
@@ -29,15 +31,18 @@ public class ButtonListenerSeleccionarArchivo implements ButtonListener, ActionL
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		logger.debug("Click en Seleccionar archivo");
 		int result = fileChooser.showOpenDialog(ventana);
 		String rutaImagen;
 		if (result == JFileChooser.APPROVE_OPTION) {
+			logger.debug("Archivo valido");
 			rutaImagen = fileChooser.getSelectedFile().toString();
 			try {
 				BufferedImage img = ImageIO.read(new File(rutaImagen));
-				ImageIcon icon = new ImageIcon(getScaledImage(img, 200, 200));
+				ImageIcon icon = new ImageIcon(
+						getScaledImage(img, Utils.DEFAULT_IMAGE_WIDTH, Utils.DEFAULT_IMAGE_HEIGHT));
 				JLabel label = new JLabel(icon);
-				label.setMaximumSize(new Dimension(200, 200));
+				label.setMaximumSize(new Dimension(Utils.DEFAULT_IMAGE_WIDTH, Utils.DEFAULT_IMAGE_HEIGHT));
 				label.setAlignmentX(Component.CENTER_ALIGNMENT);
 				panelImagen.removeAll(); // Limpia el panel
 				panelImagen.updateUI(); // Refresh del panel
@@ -54,7 +59,7 @@ public class ButtonListenerSeleccionarArchivo implements ButtonListener, ActionL
 	}
 
 	// Resizea la imagen al tamanio dado ya que Swing no lo hace por defecto
-	private static Image getScaledImage(Image srcImg, int width, int height) {
+	private Image getScaledImage(Image srcImg, int width, int height) {
 		BufferedImage resizedImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2 = resizedImg.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
